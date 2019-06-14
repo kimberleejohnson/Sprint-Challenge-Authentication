@@ -1,8 +1,15 @@
 // Requiring axios to be able to talk to server
 const axios = require('axios');
 
+// Requiring my database
+const db = require('../database/dbConfig'); 
+
+// Requiring bcrypt, so my passwords can be hashed
+const bcrypt = require('bcryptjs'); 
+
 // Requiring authentication middleware 
-const { authenticate } = require('../auth/authenticate');
+// Requiring the generateToken function, part of my middleware
+const { authenticate, generateToken } = require('../auth/authenticate');
 
 // Defining routes
 module.exports = server => {
@@ -13,7 +20,20 @@ module.exports = server => {
 
 // User registration function 
 function register(req, res) {
-  // implement user registration
+  // setting variable for information passed in the form 
+  let user = req.body; 
+
+  // setting entered password to a hash
+  const hash = bcrypt.hashSync(user.password, 10)
+  user.password = hash; 
+
+  // Adding a user to the database
+  db('users')
+    .insert(user)
+    .then((ids) => {
+      res.status(201).json(ids); 
+    })
+    .catch((err) => res.status(400).json(err)); 
 }
 
 // User login function 

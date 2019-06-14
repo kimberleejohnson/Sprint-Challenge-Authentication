@@ -47,5 +47,3 @@ function authenticate(req, res, next) {
     });
   }
 }
-
-// Placeholder for generateToken function 
