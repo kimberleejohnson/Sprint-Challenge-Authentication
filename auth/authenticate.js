@@ -2,22 +2,39 @@
 const jwt = require('jsonwebtoken');
 
 // Defining my secret 
-const jwtKey =
-  process.env.JWT_SECRET ||
-  'add a .env file to root of project with the JWT_SECRET variable';
+// Changing to ../secrets/secrets.js file instead of env, because that's how we've done it in class the past two days
+const secrets = require('../secrets/secrets'); 
 
-// Exporting middleware functions 
+// Exporting middleware functions that verify a user and also generate a token 
 module.exports = {
   authenticate,
-  // I can add generateToken here as well 
+  generateToken
 };
 
-// Authentication function 
+// Function that generatesToken for user 
+function generateToken(req, res, next) {
+  // Defining payload, containing claims (info) for token 
+  const payload = {
+    subject: user.id, 
+    username: user.username, 
+    department: user.department
+  };
+
+  const options = {
+    expiresIn: '1d'
+  }
+
+  // Grabs the jwtSecret to verify token 
+  return jwt.sign(payload, secrets.jwtSecret, options)
+}
+
+// Authentication function, that verifies a user's data 
 function authenticate(req, res, next) {
   const token = req.get('Authorization');
 
   if (token) {
-    jwt.verify(token, jwtKey, (err, decoded) => {
+    // Changing jwtKey to jwtSecret to match our project in class
+    jwt.verify(token, secrets.jwtSecret, (err, decoded) => {
       if (err) return res.status(401).json(err);
 
       req.decoded = decoded;
