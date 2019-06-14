@@ -1,9 +1,8 @@
 //This route will let a new user sign up to view dadjokes 
 
 import React from 'react'; 
-
-// Eventually I'll need to import withRouter to redirect on register
-
+// Importing withRouter so that routes can talk to components 
+import { withRouter } from 'react-router-dom'; 
 // Importing axios helper, so my code can be more dry
 import api from './helpers/api'; 
 
@@ -16,7 +15,7 @@ class SignUp extends React.Component {
     }
 
     // Defining my handle submit function, which stores a token 
-    handleSubmit = e => {
+    handleSubmit = async e => {
         e.preventDefault(); 
 
         try {
@@ -32,7 +31,8 @@ class SignUp extends React.Component {
             // Storing login results in local storage
             localStorage.setItem('token', result.data.token); 
 
-            // PLACEHOLDER: redirect once login set 
+            // Redirect to sign in once login set
+            this.props.history.push('/login');  
         
         } catch (err) {
             console.error(err); 
@@ -56,10 +56,12 @@ class SignUp extends React.Component {
 
                     <input type="text" name="password" placeholder="password" onChange={this.handleChanges} value={this.state.password} /> 
 
+                    <button type="submit">Sign Up</button>
+
                 </form>
             </> 
         )
     }
 }
 
-export default SignUp; 
+export default withRouter(SignUp); 
