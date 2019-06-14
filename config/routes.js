@@ -1,21 +1,67 @@
+// Requiring axios to be able to talk to server
 const axios = require('axios');
 
-const { authenticate } = require('../auth/authenticate');
+// Requiring my database
+const db = require('../database/dbConfig'); 
 
+// Requiring bcrypt, so my passwords can be hashed
+const bcrypt = require('bcryptjs'); 
+
+// Requiring authentication middleware 
+// Requiring the generateToken function, part of my middleware
+const { authenticate, generateToken } = require('../auth/authenticate');
+
+// Defining routes
 module.exports = server => {
   server.post('/api/register', register);
   server.post('/api/login', login);
   server.get('/api/jokes', authenticate, getJokes);
 };
 
+// User registration function 
 function register(req, res) {
-  // implement user registration
+  // setting variable for information passed in the form 
+  let user = req.body; 
+
+  // setting entered password to a hash
+  const hash = bcrypt.hashSync(user.password, 10)
+  user.password = hash; 
+
+  // Adding a user to the database
+  db('users')
+    .insert(user)
+    .then((ids) => {
+      res.status(201).json(ids); 
+    })
+    .catch((err) => res.status(400).json(err)); 
 }
 
+// User login function 
 function login(req, res) {
-  // implement user login
+  // Setting requested information as variable 
+  let { username, password } = req.body; 
+
+  // Checking to see if user is in the database
+  db('users')
+    .where({ username })
+    .first()
+    .then(user => {
+      if(user && bcrypt.compareSync(password, user.password)) {
+        const token = generateToken(user); 
+
+        res.status(200).json({
+          message: `Welcome ${user.username}!`, token
+        });
+      } else {
+        res.status(401).json({message: 'Invalid credentials!'})
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error); 
+    });
 }
 
+// Function that retrieves dad joke data 
 function getJokes(req, res) {
   const requestOptions = {
     headers: { accept: 'application/json' },
