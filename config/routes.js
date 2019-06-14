@@ -38,7 +38,27 @@ function register(req, res) {
 
 // User login function 
 function login(req, res) {
-  // implement user login
+  // Setting requested information as variable 
+  let { username, password } = req.body; 
+
+  // Checking to see if user is in the database
+  db('users')
+    .where({ username })
+    .first()
+    .then(user => {
+      if(user && bcrypt.compareSync(password, user.password)) {
+        const token = generateToken(user); 
+
+        res.status(200).json({
+          message: `Welcome ${user.username}!`, token
+        });
+      } else {
+        res.status(401).json({message: 'Invalid credentials!'})
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error); 
+    });
 }
 
 // Function that retrieves dad joke data 

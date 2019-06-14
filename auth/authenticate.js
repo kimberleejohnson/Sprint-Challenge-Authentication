@@ -12,7 +12,7 @@ module.exports = {
 };
 
 // Function that generatesToken for user 
-function generateToken(req, res, next) {
+function generateToken(user) {
   // Defining payload, containing claims (info) for token 
   const payload = {
     subject: user.id, 
