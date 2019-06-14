@@ -12,12 +12,12 @@ class Jokes extends React.Component {
     // Making a request to see list of users
     async componentDidMount() {
         try {
-            const result = await api.get('/jokes');
+            const res = await api.get('/jokes');
             
             // Setting my state to the users retrieved from the backend
             this.setState(() => (
                 {
-                    jokes: result.data.jokes
+                    jokes: res.data.jokes
                 }));
             
         } catch (err) {
