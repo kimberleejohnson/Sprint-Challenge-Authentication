@@ -12,9 +12,14 @@ import Jokes from './Jokes';
 // Changing App to a Class component 
 class App extends React.Component {
 
-  // PLACEHOLDER for logout function 
+  //Logout function, passed down to logout button 
+  logout = () => {
+    // Destroys the token 
+   localStorage.removeItem('token');  
 
-  // PLACEHOLDER for redirect props.push 
+   // Redirects to login 
+   this.props.history.push('/signin'); 
+  }
 
   render() {
     return (
@@ -27,7 +32,7 @@ class App extends React.Component {
         <li><NavLink to="/signup">Sign Up</NavLink></li>
         <li><NavLink to="/login">Login</NavLink></li>
         <li><NavLink to="/jokes">Jokes</NavLink></li>
-
+        <li><button onClick={this.logout}>Logout</button></li>
       </ul>
 
       <div>

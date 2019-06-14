@@ -5,9 +5,13 @@ import { withRouter } from 'react-router-dom';
 import api from './helpers/api'; 
 
 class Jokes extends React.Component {
-    state = {
-        jokes: [], 
+    constructor(){
+        super(); 
+        this.state = {
+            jokes: [], 
+        }
     }
+    
 
     // Making a request to see list of users
     async componentDidMount() {
@@ -17,7 +21,7 @@ class Jokes extends React.Component {
             // Setting my state to the users retrieved from the backend
             this.setState(() => (
                 {
-                    jokes: res.data.jokes
+                    jokes: res.data 
                 }));
             
         } catch (err) {
