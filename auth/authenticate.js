@@ -1,15 +1,18 @@
+// Requiring jsonwebtoken
 const jwt = require('jsonwebtoken');
 
+// Defining my secret 
 const jwtKey =
   process.env.JWT_SECRET ||
   'add a .env file to root of project with the JWT_SECRET variable';
 
-// quickly see what this file exports
+// Exporting middleware functions 
 module.exports = {
   authenticate,
+  // I can add generateToken here as well 
 };
 
-// implementation details
+// Authentication function 
 function authenticate(req, res, next) {
   const token = req.get('Authorization');
 
@@ -27,3 +30,5 @@ function authenticate(req, res, next) {
     });
   }
 }
+
+// Placeholder for generateToken function 
