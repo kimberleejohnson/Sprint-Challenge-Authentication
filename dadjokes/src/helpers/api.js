@@ -3,7 +3,7 @@
 import axios from 'axios'; 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:5500/api'
+    baseURL: 'http://localhost:3300/api'
 })
 
 // Setting up an interceptor to run the page multiple times to avoid my 401 error 

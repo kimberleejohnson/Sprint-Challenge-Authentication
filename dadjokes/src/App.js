@@ -6,6 +6,8 @@ import { Route, NavLink, withRouter } from 'react-router-dom';
 
 // Importing the components that will be displayed 
 import SignUp from './SignUp';
+import SignIn from './SignIn'
+import Jokes from './Jokes'; 
 
 // Changing App to a Class component 
 class App extends React.Component {
@@ -23,11 +25,15 @@ class App extends React.Component {
 
       <ul>
         <li><NavLink to="/signup">Sign Up</NavLink></li>
+        <li><NavLink to="/login">Login</NavLink></li>
+        <li><NavLink to="/jokes">Jokes</NavLink></li>
 
       </ul>
 
       <div>
         <Route path="/signup" component={SignUp} /> 
+        <Route path="/login" component={SignIn} /> 
+        <Route path="/jokes" component={Jokes} /> 
       </div>
       </>
     );
