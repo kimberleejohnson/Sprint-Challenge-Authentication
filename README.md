@@ -32,15 +32,15 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 Sessions allow Authentication to persist, meaning a user can stay logged in for a given amount of time because sessions enable the server to remember the user. 
 
-1. What does bcrypt do to help us store passwords in a secure manner.
+2. What does bcrypt do to help us store passwords in a secure manner.
 
 Bcrypt hashes passwords and implements salting both manually and automatically so that we're able to store them securely. 
 
-1. What does bcrypt do to slow down attackers?
+3. What does bcrypt do to slow down attackers?
 
 Bcrypt hashes passwords multiple times, so an attacker would have to have the hash, know the algorithm used, and know how many rounds were used to generate the hash in the first place.
 
-1. What are the three parts of the JSON Web Token?
+4. What are the three parts of the JSON Web Token?
 
 The three parts of a JWT are: 1) The header (holds the algorithm and token type), 2) The payload (holds all the data, called claims) and 3) The signature, which is the base64 encoded header and payload signed with a secret. 
 
